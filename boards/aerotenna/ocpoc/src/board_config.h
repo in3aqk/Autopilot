@@ -50,6 +50,8 @@
 
 #define PX4_I2C_BUS_LED 1
 
+#define BOARD_NUMBER_BRICKS 1
+
 // ADC channels:
 #define ADC_CHANNELS (1 << 8)
 

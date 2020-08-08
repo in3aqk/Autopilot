@@ -50,7 +50,6 @@
 #include <px4_platform_common/px4_work_queue/ScheduledWorkItem.hpp>
 #include <uORB/Publication.hpp>
 #include <uORB/topics/adc_report.h>
-#include <uORB/topics/system_power.h>
 
 using namespace time_literals;
 
@@ -92,17 +91,13 @@ private:
 	 */
 	uint32_t		sample(unsigned channel);
 
-	void			update_adc_report(hrt_abstime now);
-	void			update_system_power(hrt_abstime now);
-
 	static const hrt_abstime	kINTERVAL{10_ms};	/**< 100Hz base rate */
 
-	perf_counter_t			_sample_perf;
+	perf_counter_t			_cycle_perf{perf_alloc(PC_ELAPSED, MODULE_NAME": cycle")};
 
 	unsigned			_channel_count{0};
 	const uint32_t			_base_address;
 	px4_adc_msg_t			*_samples{nullptr};	/**< sample buffer */
 
 	uORB::Publication<adc_report_s>		_to_adc_report{ORB_ID(adc_report)};
-	uORB::Publication<system_power_s>	_to_system_power{ORB_ID(system_power)};
 };

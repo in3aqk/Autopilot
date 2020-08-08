@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- *   Copyright (c) 2017 PX4 Development Team. All rights reserved.
+ *   Copyright (C) 2012-2020 PX4 Development Team. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -32,28 +32,54 @@
  ****************************************************************************/
 
 /**
- * @file board_config.h
+ * @file SystemPower.hpp
  *
- * RPI internal definitions
+ * Driver for an ADC.
+ *
  */
+#include <stdint.h>
 
-#pragma once
+#include <drivers/drv_hrt.h>
+#include <lib/perf/perf_counter.h>
+#include <px4_platform_common/log.h>
+#include <px4_platform_common/module.h>
+#include <px4_platform_common/px4_config.h>
+#include <px4_platform_common/px4_work_queue/ScheduledWorkItem.hpp>
+#include <uORB/Publication.hpp>
+#include <uORB/Subscription.hpp>
+#include <uORB/topics/adc_report.h>
+#include <uORB/topics/system_power.h>
 
-#define BOARD_OVERRIDE_UUID "RPIID00000000000" // must be of length 16
-#define PX4_SOC_ARCH_ID     PX4_SOC_ARCH_ID_RPI
+using namespace time_literals;
 
-/*
- * I2C busses
- */
-#define PX4_NUMBER_I2C_BUSES    2
+class SystemPower : public ModuleBase<SystemPower>, public px4::ScheduledWorkItem
+{
+public:
+	SystemPower();
+	~SystemPower() override;
 
-#define ADC_BATTERY_VOLTAGE_CHANNEL	0
-#define ADC_BATTERY_CURRENT_CHANNEL	-1
-#define ADC_AIRSPEED_VOLTAGE_CHANNEL 2
+	/** @see ModuleBase */
+	static int task_spawn(int argc, char *argv[]);
 
-#define ADC_DP_V_DIV 1.0f
+	/** @see ModuleBase */
+	static int custom_command(int argc, char *argv[]);
 
-#define BOARD_NUMBER_BRICKS 1
+	/** @see ModuleBase */
+	static int print_usage(const char *reason = nullptr);
 
-#include <system_config.h>
-#include <px4_platform_common/board_common.h>
+	int init();
+
+private:
+	void Run() override;
+
+	static int DataReadyInterruptCallback(int irq, void *context, void *arg);
+	void DataReady();
+	bool DataReadyInterruptConfigure();
+	bool DataReadyInterruptDisable();
+
+	perf_counter_t _cycle_perf{perf_alloc(PC_ELAPSED, MODULE_NAME": cycle")};
+
+	uORB::Publication<system_power_s> _to_system_power{ORB_ID(system_power)};
+
+	uORB::Subscription _adc_report_sub{ORB_ID(adc_report)};
+};
