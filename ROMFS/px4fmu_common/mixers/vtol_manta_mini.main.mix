@@ -1,43 +1,70 @@
 # Manta mini configuration
+# Refers to 13201_manta_mini  init file
+
+# Inputs to the mixer come from channel group 0 (vehicle attitude)
+ch 0 (roll),
+ch 1 (pitch),
+ch 2 (thrust),
+ch 3 (yaw),
+ch 4 (flaps),
+ch 7 (landing gear)
+
 
 # Engine configuration
 # 8+ means: octocopter in + configuration
+# R: <geometry> <roll scale> <pitch scale> <yaw scale> <idlespeed>
+# only <geometry i s mandatory
+# MAIN motor 1-8 are dedicated to this mixer section
 R: 8+
 
-Z:
 
-Tilt mechanism servo mixer
+
+
+
+# Tilt mechanism servo mixer
 ---------------------------
-#RIGHT up:2000 down:1000
+# first group decoder, the second is identical and reversed:
+# S: 1 4 input from 1 grp (Flight Control VTOL/Alternate) control 4 (reserved / aux0)
+# reserved / aux0 is the transition control that tilts the nacelles
+# S: 0 2 input from 0 grp (Flight Control) control 2 (yaw)
+
+# Attentions seems that with this config the fan are tilted with yaw control
+
+# S directive decoder
+# S: <group> <index> <-ve scale> <+ve scale> <offset> <lower limit> <upper limit>
+
+# O directive decoder
+# O: <-ve scale> <+ve scale> <offset> <lower limit> <upper limit>
+
+
+# RIGHT up:2000 down:1000
+# M: 2 get input from 2 control mixers
 M: 2
 S: 1 4      0 -20000  10000 -10000  10000
 S: 0 2   8000   8000      0 -10000  10000
 
-#LEFT up:1000 down:2000
+# LEFT up:1000 down:2000
+# M 2 get input from 2 control mixers
+
 M: 2
 S: 1 4      0  20000 -10000 -10000  10000
 S: 0 2   8000   8000      0 -10000  10000
 
-Canard
 
+Canard (elevator)
+----------------------------
+Non yet implemented
 
+M: 1
+S: 0 1  -10000  -10000   0  -10000  10000
 
-
-
-
+Throttle
+----------------------------
+M: 1
+S: 0 3   0  20000  -10000  -10000  10000
 
 Rudder
+----------------------------
+M: 1
+S: 0 2   10000  10000    0  -10000  10000
 
-
-
-
-
-Elevon mixers REMOVE
--------------
-M: 2
-S: 1 0   7500   7500      0 -10000  10000
-S: 1 1   8000   8000      0 -10000  10000
-
-M: 2
-S: 1 0   7500   7500      0 -10000  10000
-S: 1 1  -8000  -8000      0 -10000  10000

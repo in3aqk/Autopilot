@@ -18,8 +18,8 @@
 # @output AUX1 Aileron 1
 # @output AUX2 Aileron 2
 # @output AUX3 Elevator
-# @output AUX4 Rudder
-# @output AUX5 Throttle
+# @output AUX4 Trottle
+# @output AUX5 Rudder
 #
 # @board intel_aerofc-v1 exclude
 # @board bitcraze_crazyflie exclude
