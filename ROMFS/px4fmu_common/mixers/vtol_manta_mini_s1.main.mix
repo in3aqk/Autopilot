@@ -1,5 +1,5 @@
-# Manta mini configuration
-# Refers to 13201_manta_mini  init file
+# Manta mini configuration step 1
+# Refers to 13201_manta_mini_s1  init file
 
 # Inputs to the mixer come from channel group 0 (vehicle attitude)
 ch 0 (roll),

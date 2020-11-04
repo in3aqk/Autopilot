@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# @name Manta mini
+# @name Manta mini step 3
 #
 # @type VTOL Tiltrotor
 # @class VTOL
@@ -29,15 +29,9 @@
 
 if [ $AUTOCNF = yes ]
 then
+	param set CBRK_AIRSPD_CHK 162128
 
-	# See the page for full parameter reference: 
-	# https://docs.px4.io/master/en/advanced_config/parameter_reference.html
-	
-	#Circuit breaker for airspeed sensor
-	param set CBRK_AIRSPD_CHK 162128  
-
-	# Airspeed mode
-	param set FW_ARSP_MODE 1 #airspeed disabled
+	param set FW_ARSP_MODE 1
 
 	param set FW_L1_PERIOD 17
 	param set FW_MAN_R_MAX 50
@@ -73,12 +67,8 @@ then
 
 	param set PWM_RATE 400
 
-	# rotation of the board respect to the airframe
-	# 0 = no rotation
-	param set SENS_BOARD_ROT 0
-	
-	
-	# VTOL specific parameters
+	param set SENS_BOARD_ROT 8
+
 	param set VT_B_TRANS_DUR  1
 	param set VT_F_TRANS_DUR  1.2
 	param set VT_F_TR_OL_TM   4
@@ -99,6 +89,6 @@ fi
 
 set MAV_TYPE 21 #Tiltrotor VTOL
 
-set MIXER vtol_manta_mini
+set MIXER vtol_manta_mini_s3
 
 set PWM_OUT 1234

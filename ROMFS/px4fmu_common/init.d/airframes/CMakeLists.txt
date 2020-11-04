@@ -132,7 +132,9 @@ px4_add_romfs_files(
 	13012_convergence
 	13013_deltaquad
 	13200_generic_vtol_tailsitter
-        13201_manta_mini
+	13201_manta_mini_s1
+	13202_manta_mini_s2
+	13203_manta_mini_s3
 
 	# [14000, 14999] Tri Y
 	14001_tri_y_yaw+
