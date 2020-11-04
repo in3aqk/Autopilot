@@ -1,5 +1,7 @@
 # Manta mini configuration step 1
 # Refers to 13201_manta_mini_s1  init file
+# This is a simple octocopter with all other control at fixed value
+
 
 # Inputs to the mixer come from channel group 0 (vehicle attitude)
 ch 0 (roll),
@@ -23,6 +25,7 @@ R: 8+
 
 # Tilt mechanism servo mixer
 ---------------------------
+# In flight step 1 all the mixers except for engines ar nulled
 # first group decoder, the second is identical and reversed:
 # S: 1 4 input from 1 grp (Flight Control VTOL/Alternate) control 4 (reserved / aux0)
 # reserved / aux0 is the transition control that tilts the nacelles
@@ -30,41 +33,41 @@ R: 8+
 
 # Attentions seems that with this config the fan are tilted with yaw control
 
-# S directive decoder
+# S -> INPUT directive decoder
 # S: <group> <index> <-ve scale> <+ve scale> <offset> <lower limit> <upper limit>
 
-# O directive decoder
+# O -> OUTPUT directive decoder
 # O: <-ve scale> <+ve scale> <offset> <lower limit> <upper limit>
 
 
-# RIGHT up:2000 down:1000
-# M: 2 get input from 2 control mixers
-M: 2
-S: 1 4      0 -20000  10000 -10000  10000
-S: 0 2   8000   8000      0 -10000  10000
+# RIGHT
+# M: 0 is zero, the sum is effectively zero and the mixer will output a fixed value
+M: 0
+O:    10000  10000   0  -10000  10000
+O:    10000  10000   0  -10000  10000
 
-# LEFT up:1000 down:2000
-# M 2 get input from 2 control mixers
+# LEFT
+# M: 0 is zero, the sum is effectively zero and the mixer will output a fixed value
 
-M: 2
-S: 1 4      0  20000 -10000 -10000  10000
-S: 0 2   8000   8000      0 -10000  10000
+M: 0
+O:    10000  10000   0  -10000  10000
+O:    10000  10000   0  -10000  10000
 
 
 Canard (elevator)
 ----------------------------
 Non yet implemented
 
-M: 1
-S: 0 1  -10000  -10000   0  -10000  10000
+M: 0
+O:   10000  10000   0  -10000  10000
 
 Throttle
 ----------------------------
-M: 1
-S: 0 3   0  20000  -10000  -10000  10000
+M: 0
+O:   10000  10000   0  -10000  10000
 
 Rudder
 ----------------------------
-M: 1
-S: 0 2   10000  10000    0  -10000  10000
+M: 0
+O:   10000  10000   0  -10000  10000
 

@@ -1,5 +1,5 @@
 # Manta mini configuration step 3
-# Refers to 13201_manta_mini_s3  init file
+# Refers to 13203_manta_mini_s3  init file
 
 # Inputs to the mixer come from channel group 0 (vehicle attitude)
 ch 0 (roll),
@@ -20,7 +20,6 @@ R: 8+
 
 
 
-
 # Tilt mechanism servo mixer
 ---------------------------
 # first group decoder, the second is identical and reversed:
@@ -30,12 +29,11 @@ R: 8+
 
 # Attentions seems that with this config the fan are tilted with yaw control
 
-# S directive decoder
+# S -> INPUT directive decoder
 # S: <group> <index> <-ve scale> <+ve scale> <offset> <lower limit> <upper limit>
 
-# O directive decoder
+# O -> OUTPUT directive decoder
 # O: <-ve scale> <+ve scale> <offset> <lower limit> <upper limit>
-
 
 # RIGHT up:2000 down:1000
 # M: 2 get input from 2 control mixers

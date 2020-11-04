@@ -1,5 +1,5 @@
 # Manta mini configuration step 2
-# Refers to 13201_manta_mini_s2  init file
+# Refers to 13202_manta_mini_s2  init file
 
 # Inputs to the mixer come from channel group 0 (vehicle attitude)
 ch 0 (roll),
@@ -30,10 +30,10 @@ R: 8+
 
 # Attentions seems that with this config the fan are tilted with yaw control
 
-# S directive decoder
+# S -> INPUT directive decoder
 # S: <group> <index> <-ve scale> <+ve scale> <offset> <lower limit> <upper limit>
 
-# O directive decoder
+# O -> OUTPUT directive decoder
 # O: <-ve scale> <+ve scale> <offset> <lower limit> <upper limit>
 
 
